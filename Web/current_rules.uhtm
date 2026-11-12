@@ -1,0 +1,14 @@
+<form method="post" action="%PostAction%" class="block">
+  <div class="fields">
+    <label for="mp">Max players</label>
+    <input type="text" id="mp" name="MaxPlayers" maxlength="3" size="4" value="%MaxPlayers%" inputmode="numeric">
+    <label for="ms">Max spectators</label>
+    <input type="text" id="ms" name="MaxSpectators" maxlength="3" size="4" value="%MaxSpectators%" inputmode="numeric">
+    <label for="gp">Game password</label>
+    <input type="text" id="gp" name="GamePassword" size="28" value="%GamePassword%" autocomplete="off">
+    <label for="mute">Mute spectators</label>
+    <span><input type="checkbox" id="mute" name="MuteSpectators" value="true"%MuteSpectators%></span>
+  </div>
+  <p class="hint">Applies right away on this map. An empty password opens the server. No spaces or quotes.</p>
+  <div class="actions"><input type="submit" name="Apply" value="Apply" class="primary"></div>
+</form>

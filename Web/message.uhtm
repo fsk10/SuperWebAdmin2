@@ -1,0 +1,4 @@
+<div class="block message" role="status">
+  <h2 style="margin-top:0">%Title%</h2>
+  <p>%Message%</p>
+</div>

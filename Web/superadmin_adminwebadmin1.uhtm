@@ -1,0 +1,37 @@
+%Notice%
+<div class="block">
+  <table class="list users">
+    <thead><tr><th>User</th><th>Level</th><th>New password</th><th>Confirm password</th><th></th></tr></thead>
+    <tbody>
+%UserRows%
+    </tbody>
+  </table>
+  <p class="hint">Leave the password fields empty to keep the current password. What the levels mean is explained at the bottom of the page.</p>
+</div>
+<form class="block narrow" method="post" action="%PostAction%">
+  <h2 class="first">Add user</h2>
+  <div class="fields">
+    <label for="nu">Username</label>
+    <span><input type="text" id="nu" name="Username" size="24" maxlength="32" autocomplete="off"></span>
+    <label for="np">Level</label>
+    <span><select id="np" name="Priv">%PrivOptions%</select></span>
+    <label for="npw">Password</label>
+    <span><input type="password" id="npw" name="Password" size="24" autocomplete="new-password"></span>
+    <label for="npc">Confirm password</label>
+    <span><input type="password" id="npc" name="ConfPassword" size="24" autocomplete="new-password"></span>
+  </div>
+  <div class="actions"><input type="submit" name="Add2" value="Add user" class="primary"></div>
+</form>
+<div class="block">
+  <h2 class="first">What each level can do</h2>
+  <table class="list levels">
+    <thead><tr><th>Level</th><th>Access</th></tr></thead>
+    <tbody>
+      <tr><td>1 - Public moderator</td><td>Players (kick and ban), Change map, Console (say only), bans and ban lists.<br><span class="muted">Cannot log in while the server is in tournament mode.</span></td></tr>
+      <tr><td>2 - Public admin</td><td>Everything in level 1, plus Mutators, Rules, Restart map and changing the game type.<br><span class="muted">Cannot log in while the server is in tournament mode.</span></td></tr>
+      <tr><td>3 - Server moderator</td><td>The pages of level 1 and 2 also during tournaments (but not changing the game type), plus QuickSet and mass editing of ban lists.</td></tr>
+      <tr><td>4 - Server admin</td><td>Everything in level 3, plus changing the game type, the Defaults pages (map cycle, rules, settings, bots) and <code>mutate</code> commands in the console.</td></tr>
+      <tr><td>5 - Super admin</td><td>Everything in level 4, plus Server settings, Web admin users, QuickSet presets and all console commands.</td></tr>
+    </tbody>
+  </table>
+</div>

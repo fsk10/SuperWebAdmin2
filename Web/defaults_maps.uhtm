@@ -1,0 +1,46 @@
+<form class="block" method="post" action="%PostAction%" id="mapform">
+  <input type="hidden" name="GameType" value="%GameType%">
+  <input type="hidden" name="MapListType" value="%MapListType%">
+  <div class="toolbar">
+    <label for="maplist">Use map list</label>
+    <select id="maplist" name="MapListSelect">
+%MapListOptions%
+    </select>
+    <input type="submit" name="MapListSet" value="Use">
+  </div>
+  <div class="dual maps">
+    <div class="col">
+      <h2>Maps not in cycle</h2>
+      <select name="ExcludeMapsSelect" id="exmaps" class="lb" multiple aria-label="Maps not in the cycle">
+%ExcludeMapsOptions%
+      </select>
+    </div>
+    <div class="moves">
+      <input type="submit" name="AddMap" id="addmap" value="Add &rsaquo;" title="Add the selected maps">
+      <input type="submit" name="DelMap" id="delmap" value="&lsaquo; Remove" title="Remove the selected maps">
+      <input type="submit" name="AddAllMap" value="Add all &raquo;">
+      <input type="submit" name="DelAllMap" value="&laquo; Remove all">
+    </div>
+    <div class="col">
+      <h2>Maps in cycle</h2>
+      <select name="IncludeMapsSelect" id="inmaps" class="lb" multiple aria-label="Maps in the cycle">
+%IncludeMapsOptions%
+      </select>
+      <div class="toolbar">
+        <label for="movecount">Move selected</label>
+        <input type="text" id="movecount" name="MoveMapCount" size="1" maxlength="1" value="1">
+        <span class="muted">steps</span>
+        <input type="submit" name="MoveMap" value="Up">
+        <input type="submit" name="MoveMap" value="Down">
+      </div>
+    </div>
+  </div>
+  <p class="hint">Changes are saved right away. Double-click a map to move it to the other list.</p>
+</form>
+<script>
+(function () {
+  var add = document.getElementById('addmap'), del = document.getElementById('delmap');
+  document.getElementById('exmaps').addEventListener('dblclick', function () { add.click(); });
+  document.getElementById('inmaps').addEventListener('dblclick', function () { del.click(); });
+})();
+</script>

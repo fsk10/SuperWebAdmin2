@@ -1,0 +1,21 @@
+<form class="block narrow" method="post" action="%PostAction%">
+  <input type="hidden" name="GameType" value="%GameType%">
+  <div class="fields">
+    <label for="fGameStyle">Game style</label>
+    <span><select id="fGameStyle" name="GameStyle">
+      <option value="0"%Normal%>Normal</option>
+      <option value="1"%Hardcore%>Hardcore</option>
+      <option value="2"%Turbo%>Turbo</option>
+    </select></span>
+    <label for="fGameSpeed">Game speed (0-100)</label>
+    <span><input type="text" id="fGameSpeed" name="GameSpeed" maxlength="3" size="3" value="%GameSpeed%"></span>
+    <label for="fAirControl">Air control (0-100)</label>
+    <span><input type="text" id="fAirControl" name="AirControl" maxlength="3" size="3" value="%AirControl%"></span>
+    <label for="fUseTranslocator">Use translocator</label>
+    <span><input type="checkbox" id="fUseTranslocator" name="UseTranslocator" value="true"%UseTranslocator%></span>
+    <label for="fMinPlayers">Minimum players</label>
+    <span><input type="text" id="fMinPlayers" name="MinPlayers" maxlength="2" size="2" value="%MinPlayers%"></span>
+%TickRate%
+  </div>
+  <div class="actions"><input type="submit" name="Apply" value="Apply" class="primary"></div>
+</form>

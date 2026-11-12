@@ -1,0 +1,18 @@
+<form class="block" method="post" action="%PostAction%">
+  <table>
+    <tr><td nowrap>Use server .ini</td><td><input type="checkbox" name="UseSysIni" value="true"%UseSysIni%></td></tr>
+    <TR><TD NOWRAP>(%IniLock%)</TD></TR>
+    
+    <tr><td nowrap>Cleanup UT Policy</td><td><input type="checkbox" name="DoCleanup" value="true"%DoCleanup%></td></tr>
+    
+    <tr><td nowrap>Kick Players</td><td><input type="checkbox" name="DoKick" value="true"%DoKick%></td></tr>
+    <tr><td nowrap>Announce Kicks</td><td><input type="checkbox" name="DoAnnounce" value="true"%DoAnnounce%></td></tr>
+    
+    <TR><TD nowrap><B>Automaton Security:</B><BR>(Leave empty to disable)</TD></tr>
+    <tr><td nowrap>Automaton Name</td><td><input type="text" name="AutoName" size="15" value="%AutoName%"></td></tr>
+    <tr><td nowrap>Automaton Password</td><td><input type="text" name="AutoPass" size="15" value="%AutoPass%"></td></tr>
+    
+    <tr><TD></TD><td colspan="1" align="left"><input type="submit" name="Apply" value="Apply" class="primary"></td></tr>
+  </table>
+</form>
+</table>

@@ -1,0 +1,92 @@
+<form method="post" action="%PostAction%" class="block" id="mutform">
+  <div class="dual">
+    <div class="col">
+      <h2>Available <span id="availcount">(%MutatorCount%)</span></h2>
+      <input type="search" id="mutfilter" placeholder="Filter mutators" aria-label="Filter available mutators">
+      <select name="ExcludeMutatorsSelect" id="avail" class="lb" multiple aria-label="Available mutators">
+%AvailOptions%
+      </select>
+    </div>
+    <div class="moves">
+      <input type="submit" name="AddMutator" id="addmut" value="Add &rsaquo;" title="Add the selected mutators">
+      <input type="submit" name="DelMutator" id="delmut" value="&lsaquo; Remove" title="Remove the selected mutators">
+    </div>
+    <div class="col">
+      <h2>Next map loads <span id="usedcount"></span></h2>
+      <p class="hint note">In this order. New mutators are added at the end. Double-click a mutator to move it.</p>
+      <select name="IncludeMutatorsSelect" id="used" class="lb" multiple aria-label="Mutators for the next map">
+%UsedOptions%
+      </select>
+    </div>
+  </div>
+  <div class="fields" style="margin-top:16px">
+    <label for="other">Other mutators</label>
+    <input type="text" id="other" name="OtherMutators" size="40" value="%OtherMutators%" placeholder="Package.Class, Package.Class">
+  </div>
+  <p class="hint">For mutators without an .int entry. Comma separated; classes that do not exist are ignored.</p>
+  <div class="actions">
+    <input type="submit" name="SetMutators" id="savemut" value="Save mutators" class="primary" hidden>
+    <input type="submit" name="UpdateOther" id="saveother" value="Save other mutators">
+    <span class="hint" id="unsaved" hidden>Not saved yet.</span>
+  </div>
+  <p class="hint">Saved changes take effect at the next map change or restart. Mutators that other mutators load by themselves (for example IG+ add-ons) are not listed and do not need to be.</p>
+</form>
+<script>
+(function () {
+  var form = document.getElementById('mutform'), A = document.getElementById('avail'), U = document.getElementById('used');
+  var F = document.getElementById('mutfilter'), unsaved = document.getElementById('unsaved');
+  // With JavaScript the lists are edited here and saved in one go; without it the
+  // Add/Remove buttons post to the server one step at a time.
+  document.getElementById('savemut').hidden = false;
+  document.getElementById('saveother').hidden = true;
+  function counts() {
+    var vis = 0;
+    for (var i = 0; i < A.options.length; i++) if (!A.options[i].hidden) vis++;
+    document.getElementById('availcount').textContent = F.value ? '(' + vis + ' of ' + A.options.length + ')' : '(' + A.options.length + ')';
+    document.getElementById('usedcount').textContent = '(' + U.options.length + ')';
+  }
+  function filter() {
+    var q = F.value.toLowerCase();
+    for (var i = 0; i < A.options.length; i++) {
+      var o = A.options[i];
+      o.hidden = o.textContent.toLowerCase().indexOf(q) < 0;
+      if (o.hidden) o.selected = false;
+    }
+    counts();
+    // redraw the list widgets (swa2 page script)
+    A.dispatchEvent(new Event('change'));
+    U.dispatchEvent(new Event('change'));
+  }
+  // Removed mutators go back to their place in the available list.
+  function insertSorted(o) {
+    for (var i = 0; i < A.options.length; i++)
+      if (A.options[i].textContent.toLowerCase() > o.textContent.toLowerCase()) { A.insertBefore(o, A.options[i]); return; }
+    A.appendChild(o);
+  }
+  function move(from) {
+    var sel = Array.prototype.slice.call(from.options).filter(function (o) { return o.selected && !o.hidden; });
+    sel.forEach(function (o) { o.selected = false; if (from === A) U.appendChild(o); else insertSorted(o); });
+    if (sel.length) unsaved.hidden = false;
+    filter();
+  }
+  document.getElementById('addmut').onclick = function (e) { e.preventDefault(); move(A); };
+  document.getElementById('delmut').onclick = function (e) { e.preventDefault(); move(U); };
+  A.ondblclick = function () { move(A); };
+  U.ondblclick = function () { move(U); };
+  F.oninput = filter;
+  F.onkeydown = function (e) { if (e.key === 'Enter') e.preventDefault(); };
+  var other = document.getElementById('other');
+  other.oninput = function () { unsaved.hidden = false; };
+  other.onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('savemut').click(); } };
+  form.onsubmit = function () {
+    // the order of the right list is the order of the next map
+    for (var i = 0; i < U.options.length; i++) {
+      var h = document.createElement('input');
+      h.type = 'hidden'; h.name = 'Mutator'; h.value = U.options[i].value;
+      form.appendChild(h);
+    }
+    A.selectedIndex = -1; U.selectedIndex = -1;
+  };
+  counts();
+})();
+</script>

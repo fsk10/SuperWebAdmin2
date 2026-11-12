@@ -1,0 +1,10 @@
+build/
+testserver/
+dist/
+*.log
+*.zip
+.planning/
+original/
+tasks/
+docs/server-repo-changes.md
+docs/mockups/

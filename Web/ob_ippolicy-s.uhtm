@@ -1,0 +1,6 @@
+<form method="post" action="%PostAction%" class="row new">
+  <label><input type="radio" name="AcceptDeny" value="ACCEPT">Accept</label>
+  <label><input type="radio" name="AcceptDeny" value="DENY" checked>Deny</label>
+  <input type="text" name="IPMask" size="16" placeholder="IP address mask" aria-label="New IP address mask">
+  <input type="submit" name="Update" value="Add" class="primary">
+</form>

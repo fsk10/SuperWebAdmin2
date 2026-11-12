@@ -1,0 +1,9 @@
+<form method="post" action="%PostAction%" class="row">
+  <input type="text" name="IPMask" size="16" value="%IPMask%" aria-label="IP address mask">
+  <input type="text" name="DayCount" size="4" value="%DayCount%" aria-label="Days" title="Days">
+  <input type="text" name="MapCount" size="4" value="%MapCount%" aria-label="Maps" title="Maps">
+  <input type="text" name="Reason" size="22" value="%Reason%" aria-label="Reason">
+  <span class="muted">%Ident%</span>
+  <input type="submit" name="Update" value="Save">
+  <input type="submit" name="Delete" value="Delete" class="danger">
+</form>

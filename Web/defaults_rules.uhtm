@@ -1,0 +1,20 @@
+<form class="block narrow" method="post" action="%PostAction%">
+  <input type="hidden" name="GameType" value="%GameType%">
+  <div class="fields">
+%FragSubst%
+%TimeLimitSubst%
+    <label for="fMaxPlayers">Max connections</label>
+    <span><input type="text" id="fMaxPlayers" name="MaxPlayers" maxlength="3" size="3" value="%MaxPlayers%"></span>
+    <label for="fMaxSpectators">Max spectators</label>
+    <span><input type="text" id="fMaxSpectators" name="MaxSpectators" maxlength="3" size="3" value="%MaxSpectators%"></span>
+%BalanceSubst%
+%TeamSubst%
+%ForceRespawnSubst%
+    <label for="fWeaponsStay">Weapons stay</label>
+    <span><input type="checkbox" id="fWeaponsStay" name="WeaponsStay" value="true"%WeaponsStay%></span>
+    <label for="fTournament">Tournament</label>
+    <span><input type="checkbox" id="fTournament" name="Tournament" value="true"%Tournament%></span>
+%FriendlyFireSubst%
+  </div>
+  <div class="actions"><input type="submit" name="Apply" value="Apply" class="primary"></div>
+</form>
