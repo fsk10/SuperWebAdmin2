@@ -1041,7 +1041,7 @@ event Query(SWARequest Request, SWAResponse Response)
 	// UpdateScript) keep sending Basic Auth with every request.
 	if (Request.Username == "")
 	{
-		Token = Request.GetCookie("swa2s");
+		Token = Request.GetCookie(SessionCookie());
 		if (Token != "")
 		{
 			User = Config.SessionUser(Token, NowMinutes());
@@ -1070,7 +1070,7 @@ event Query(SWARequest Request, SWAResponse Response)
 	{
 		Config.EndSession(Token);
 		log("SWA: "$Request.UserName$"("$Request.ClientIP$") logged out.");
-		SendCookieRedirect(Response, "/login?LoggedOut=1", "swa2s=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0");
+		SendCookieRedirect(Response, "/login?LoggedOut=1", SessionCookie()$"=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0");
 		return;
 	}
 	if (sURI == "logout")
@@ -3936,7 +3936,7 @@ function QueryLogin(SWARequest Request, SWAResponse Response)
 	}
 	Token = Config.NewSession(User, NowMinutes(), Request.ClientIP);
 	log("SWA: "$User$"("$Request.ClientIP$") logged in.");
-	SendCookieRedirect(Response, SafeNext(Next), "swa2s="$Token$"; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000");
+	SendCookieRedirect(Response, SafeNext(Next), SessionCookie()$"="$Token$"; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000");
 }
 
 // The game server's ip:port. A server bound to every interface reports 0.0.0.0; then the
@@ -3965,6 +3965,13 @@ function string ServerAddress()
 			return A;
 	}
 	return H $ Mid(A, 7);
+}
+
+// Browsers keep cookies per host, not per port: one cookie name per web admin port lets
+// an admin stay logged in to several servers on the same host at once.
+function string SessionCookie()
+{
+	return "swa2s"$ListenPort;
 }
 
 function ShowLogin(SWAResponse Response, string Message, bool bError, string Next, string User)

@@ -39,12 +39,12 @@ check('cross-site login refused', r.status === 403)
 r = await login(env.SWA_ADMIN_USER, env.SWA_ADMIN_PASS)
 const cookie = (r.headers.get('set-cookie') || '').split(';')[0]
 check('login -> 303 to the requested page', r.status === 303 && r.headers.get('location') === '/current_mutators', `${r.status} ${r.headers.get('location')}`)
-check('session cookie is HttpOnly + SameSite=Strict', /^swa2s=[0-9A-F]{32}$/.test(cookie) && /HttpOnly/.test(r.headers.get('set-cookie')) && /SameSite=Strict/.test(r.headers.get('set-cookie')))
+check('session cookie is per port, HttpOnly + SameSite=Strict', new RegExp('^swa2s' + new URL(base).port + '=[0-9A-F]{32}$').test(cookie) && /HttpOnly/.test(r.headers.get('set-cookie')) && /SameSite=Strict/.test(r.headers.get('set-cookie')))
 
 r = await fetch(base + '/current_players', { headers: { ...browser, Cookie: cookie } })
 t = await r.text()
 check('page with session cookie', r.status === 200 && t.includes('class="topbar"') && t.includes(`<b>${env.SWA_ADMIN_USER}</b>`))
-r = await fetch(base + '/current_players', { headers: { ...browser, Cookie: 'swa2s=0123456789ABCDEF0123456789ABCDEF' } })
+r = await fetch(base + '/current_players', { headers: { ...browser, Cookie: 'swa2s' + new URL(base).port + '=0123456789ABCDEF0123456789ABCDEF' } })
 check('made-up session cookie -> login page', (await r.text()).includes('action="/login"'))
 
 r = await login(env.SWA_ADMIN_USER, env.SWA_ADMIN_PASS, {})
