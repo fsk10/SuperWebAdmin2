@@ -33,7 +33,7 @@ var ListItem AvailMutators;     // all mutators of the .int files, sorted by nam
 var string ActiveMutators;      // ordered mutator list for the next map (see LoadMutators)
 var string JustMovedMutators;   // keeps moved items selected on the Mutators page
 const MaxMutatorClasses = 1000;
-const SWAVersion = "1.0";
+const SWAVersion = "1.1";
 
 var string MenuPage;
 var string RootPage;
