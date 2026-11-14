@@ -79,7 +79,7 @@ This was the main reason for SuperWebAdmin2.
 
 ## Install
 
-Download `SuperWebAdmin2-1.0.zip` from the Releases page. It contains `System/` and
+Download `SuperWebAdmin2-1.1.zip` from the Releases page. It contains `System/` and
 `Web/`, laid out like the server.
 
 1. Copy `System/` and `Web/` into the server's UT folder, merging with the folders that
