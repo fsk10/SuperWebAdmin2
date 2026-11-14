@@ -26,6 +26,7 @@
       <input type="submit" name="Kick" value="Kick / ban selected" class="primary">
     </div>
     <div class="actions">%IPBanType%</div>
+    <label class="autorefresh" hidden><input type="checkbox" id="autorefresh"> Refresh the list every 10 seconds</label>
     <p class="hint">The player sees the reason and your name. "Ban IP" adds the player's IP address to the ban list (see Bans)%DynBanHint%.</p>
   </div>
 </form>

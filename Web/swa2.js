@@ -58,6 +58,23 @@
     };
   }
 
+  // ---- players page: optional refresh every 10 s (choice kept in this browser) ----
+  var ar = document.getElementById('autorefresh');
+  if (ar) {
+    ar.parentNode.hidden = false;
+    try { ar.checked = localStorage.getItem('swa2-autorefresh') === '1'; } catch (e) { }
+    ar.onchange = function () { try { localStorage.setItem('swa2-autorefresh', ar.checked ? '1' : '0'); } catch (e) { } };
+    setInterval(function () {
+      var f = ar.form;
+      if (!ar.checked || document.hidden || !f) return;
+      // never throw away a kick or ban the admin is preparing
+      if (f.querySelector('input[name^="KickPlayer"]:checked, input[name^="BanPlayer"]:checked')) return;
+      if (f.Reason && f.Reason.value !== '') return;
+      if (document.activeElement && document.activeElement !== ar && f.contains(document.activeElement)) return;
+      location.replace(location.pathname + (f.Sort && f.Sort.value ? '?Sort=' + encodeURIComponent(f.Sort.value) : ''));
+    }, 10000);
+  }
+
   // ---- list widget: <select multiple class="lb"> shown as a list with tooltips and a
   // muted class name. The select stays the source of truth (it is what the form posts);
   // pages send it a 'change' event after changing its options. ----

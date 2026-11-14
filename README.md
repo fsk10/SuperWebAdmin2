@@ -96,6 +96,9 @@ Download `SuperWebAdmin2-1.0.zip` from the Releases page. It contains `System/` 
    - `UserList[0]=name:password:5`: the first user, a Super admin. The password is
      replaced by a hash the first time the server starts.
    - `Salt`: 10 or more random characters
+   - Optional: `ConsoleFavorites[0]=Allow one without ACE|/mutate nploader allowone` and so on
+     (up to 16, `button label|text or /command`, the label may be left out), quick
+     command buttons on the Console page. Each button is only shown to levels that may send it.
 4. Restart the server. The log shows `SuperWebAdmin2` with the port. Open
    `http://server:port/` and log in.
 
@@ -157,7 +160,7 @@ The only difference: an invalid game password now returns HTTP 400 instead of 20
 VoteSys treats every map change it did not make itself as a server restart, and
 switches straight to its default preset and map. On a server with VoteSys, change maps
 through VoteSys; a map change from the web admin is undone right away. 0.97b had the
-same problem.
+same problem. The Map page shows a note when VoteSys is running.
 
 ## Privilege levels
 

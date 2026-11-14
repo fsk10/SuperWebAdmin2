@@ -1,3 +1,4 @@
+%VoteSysNote%
 <form method="post" action="%PostAction%" class="block">
   <table>
     <tr>
