@@ -1,0 +1,3 @@
+<div class="block">
+  <p class="hint">Players are banned by IP address: <strong>Deny</strong> means banned. Delete a row to unban; the change applies at once. The first row (ACCEPT,*) lets everyone else in and cannot be deleted. An address may end in * to cover a range (for example 192.168.*).</p>
+  <div class="rows">

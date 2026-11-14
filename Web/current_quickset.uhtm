@@ -1,0 +1,21 @@
+<form class="block" method="post" action="%PostAction%" name="quickset">
+  <table>
+    <tr><td nowrap>Game Type:</td>
+      <td nowrap>%GameTypeSelect%</td>
+      <td>%GameTypeButton%</td>
+    </tr>
+    <tr>
+%MapSelect%
+      <td>%MapButton%</td>
+    </tr>
+    <tr>
+%PlayersSelect%%SpecSelect%
+      <td>%PlayersButton%</td>
+    </tr>
+    <tr>
+%Password%
+	<td>%PasswordButton%</td>
+     </tr>
+  </table>
+%RestartButton%
+</form>

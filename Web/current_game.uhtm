@@ -1,0 +1,15 @@
+<form method="post" action="%PostAction%" class="block">
+  <table>
+    <tr>
+	%GameTypeSelect%
+	%GameTypeButton%
+    </tr>
+    <tr><td>Map</td>
+      <td><select name="MapSelect">
+%MapSelect%
+      </select></td>
+      <td>%MapButton%</td>
+    </tr>
+  </table>
+  <p class="hint">The map changes right away and keeps the current mutators (see Mutators) and server options. Players are moved to the new map.</p>
+</form>

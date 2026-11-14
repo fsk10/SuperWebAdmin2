@@ -1,0 +1,7 @@
+<form method="post" action="%PostAction%" class="row">
+  <label><input type="radio" name="AcceptDeny" value="ACCEPT" %AcceptCheck%>Accept</label>
+  <label><input type="radio" name="AcceptDeny" value="DENY" %DenyCheck%>Deny</label>
+  <input type="text" name="IPMask" size="16" value="%IPMask%" aria-label="IP address mask">
+  <input type="submit" name="Update" value="Save">
+%DeleteButton%
+</form>

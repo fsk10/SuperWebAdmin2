@@ -1,0 +1,7 @@
+<form method="post" action="%PostAction%" class="row new">
+  <input type="text" name="IPMask" size="16" placeholder="IP address mask" aria-label="New IP address mask">
+  <input type="text" name="DayCount" size="4" value="%DayCount%" aria-label="Days" title="Days">
+  <input type="text" name="MapCount" size="4" value="%MapCount%" aria-label="Maps" title="Maps">
+  <input type="text" name="Reason" size="22" value="%Comment%" placeholder="Reason" aria-label="Reason">
+  <input type="submit" name="Update" value="Add" class="primary">
+</form>

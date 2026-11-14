@@ -1,0 +1,67 @@
+<SCRIPT TYPE="text/javascript">
+<!--
+
+function trim(s)
+{
+    while (s.substring(s.length - 1, s.length) == ' ')
+        {
+        s = s.substring(0, s.length - 1);
+        }
+
+    return(s);
+}
+
+function generate_data()
+{
+        var AnOption;
+        var cnt;
+
+        re = /\n/
+        Items = document.inForm.EditList.value.split(re);
+        cnt = 0;
+        for (var i = 0; i < Items.length; i++)
+                {
+                AnOption = new Option("", trim(Items[i]))
+                eval("document.outForm.AddressData.options[cnt] = AnOption")
+                document.outForm.AddressData.options[cnt].selected=true
+                cnt++;
+                }
+        document.outForm.Check.value = "";
+        return true
+}
+//-->
+</SCRIPT>
+<b>%SmallTitle%</b>
+<br>
+%Title%
+<noscript>
+Your browser does not support scripting<br>
+DO NOT hit 'Apply' if you value your data
+</noscript>
+<form class="block" name="inForm")>
+<table cellpadding=10>
+<tr><td>
+  <textarea name="EditList" rows="13" cols="24" wrap="off">%EditListData%</textarea>
+  </td>
+  <td>
+  <p>Ensure each line is of this format:
+  <p>"xxx.xxx.xxx.xxx=dd,mm!tttt"
+  <p>where:
+  <p>xxx = IP mask
+  <br>,dd  = day count
+  <br>,mm  = map count
+  <br>!tt = optiional comment
+  <p>e.g.
+  <br>"192.168.0.1=5,0!Five day ban"
+  </td>
+  </tr>
+ </table>
+</form>
+
+<form class="block" name="outForm" method="POST" action="%PostAction%" onSubmit="return generate_data()")>
+  <p><SELECT style="visibility:hidden" NAME="AddressData" multiple size="1"></SELECT>
+  <input type="submit" value="Apply" name="Apply"></p>
+  <noscript>
+  <input type="hidden" value="NotOK" name="Check">
+  </noscript>
+</form>

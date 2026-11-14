@@ -1,0 +1,423 @@
+/* SuperWebAdmin2 - one stylesheet, no external resources.
+   Dark slate by default (light theme via the toggle). HUD gold for "where am I / do it",
+   team red/blue only where they mean something. */
+
+:root {
+  --bg: #1a1f27;
+  --side: #1f252e;
+  --panel: #252c36;
+  --panel-2: #2c3440;
+  --line: #39434f;
+  --text: #d9e0e7;
+  --muted: #8e9aa7;
+  --info: #22303f;
+  --info-line: #2f4256;
+  --sel: #34506f;
+  --gold: #e0a83a;
+  --gold-ink: #1a1f27;
+  --red: #d65a4f;
+  --blue: #5b93dc;
+  --ok: #63b076;
+  --focus: #f2c35b;
+  --field: var(--bg);
+  --nav-hi: var(--panel);
+  --shadow: none;
+  --backdrop: rgba(0, 0, 0, .55);
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --font: "Bahnschrift", "DIN Alternate", "DIN 2014", "Roboto Condensed", "Segoe UI", system-ui, sans-serif;
+  --font-num: "Bahnschrift", "DIN Alternate", "Roboto Condensed", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  /* a conventional light theme: light grey page, white panels and fields, grey borders */
+  --bg: #f6f8fa;
+  --side: #eef1f4;
+  --panel: #ffffff;
+  --panel-2: #f6f8fa;
+  --field: #ffffff;
+  --nav-hi: #ffffff;
+  --line: #d0d7de;
+  --text: #1f2328;
+  --muted: #59636e;
+  --info: #eaf2fb;
+  --info-line: #c5d8ee;
+  --sel: #ddebfb;
+  --gold: #9a6700;
+  --gold-ink: #ffffff;
+  --red: #cf222e;
+  --blue: #0969da;
+  --ok: #1a7f37;
+  --focus: #0969da;
+  --shadow: 0 1px 2px rgba(31, 35, 40, .06), 0 1px 3px rgba(31, 35, 40, .04);
+  --backdrop: rgba(31, 35, 40, .35);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.45 var(--font);
+}
+
+a { color: var(--blue); }
+a:hover { color: var(--gold); }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---- top bar: which server this is ------------------------------------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background: var(--side);
+  border-bottom: 3px solid var(--gold);
+}
+.topbar .server { min-width: 0; }
+.topbar .server .name {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.topbar .server small { display: block; font-size: 12px; color: var(--muted); }
+.topbar .right { margin-left: auto; display: flex; align-items: center; gap: 14px; font-size: 14px; flex-shrink: 0; }
+.topbar .user b { font-weight: 600; }
+.topbar .user .lvl { color: var(--muted); }
+.topbar .user { display: flex; align-items: center; gap: 8px; }
+.topbar .user .lvl { margin-right: 6px; }
+
+/* links that act as buttons */
+a.btn {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  color: var(--text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+a.btn:hover { border-color: var(--gold); color: var(--text); }
+
+/* icon button: theme toggle (sun in dark mode, moon in light mode) */
+button.icon { width: 32px; padding: 0; display: inline-flex; align-items: center; justify-content: center; }
+button.icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+button.icon .i-moon { display: none; }
+:root[data-theme="light"] button.icon .i-sun { display: none; }
+:root[data-theme="light"] button.icon .i-moon { display: block; }
+.menubtn { display: none; }
+
+/* ---- info bar: the current match ---------------------------------------- */
+
+.hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 26px;
+  padding: 9px 20px;
+  background: var(--info);
+  border-bottom: 1px solid var(--info-line);
+}
+.hud .map { font-size: 19px; font-weight: 600; word-break: break-all; }
+.hud .stat { display: flex; flex-direction: column; line-height: 1.15; }
+.hud .stat .v { font-family: var(--font-num); font-weight: 600; font-variant-numeric: tabular-nums; }
+.hud .stat .k { font-size: 12px; color: var(--muted); }
+.hud .stat.warn .v { color: var(--gold); }
+.hud .restart {
+  margin-left: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--red);
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--red) 16%, transparent);
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: none;
+}
+.hud .restart:hover { background: var(--red); color: #fff; }
+
+/* ---- sidebar + content ----------------------------------------------------- */
+
+.shell { display: grid; grid-template-columns: 210px minmax(0, 1fr); min-height: calc(100vh - 110px); }
+
+nav.main { background: var(--side); border-right: 1px solid var(--line); padding: 14px 0 20px; }
+nav.main .group > span { display: block; margin: 16px 20px 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+nav.main .group:first-child > span { margin-top: 0; }
+nav.main a {
+  display: block;
+  padding: 6px 20px 6px 17px;
+  color: var(--text);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+nav.main a:hover { background: var(--nav-hi); color: var(--text); }
+nav.main a.current { background: var(--nav-hi); border-left-color: var(--gold); font-weight: 600; }
+
+.content { min-width: 0; display: flex; flex-direction: column; }
+
+/* ---- content -------------------------------------------------------------- */
+
+main { padding: 20px 26px 40px; max-width: 1300px; }
+
+h1 { font-size: 24px; font-weight: 600; margin: 0 0 14px; }
+h2 { font-size: 17px; font-weight: 600; margin: 22px 0 8px; }
+.muted, .hint { color: var(--muted); }
+.hint { font-size: 13px; }
+/* text inside a panel uses the panel's full width, but never makes a panel wider */
+.block p { contain: inline-size; }
+
+.block {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  margin: 0 0 16px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* tables: the old pages build rows in UnrealScript, so tables are styled generically */
+table { border-collapse: collapse; }
+main table { width: auto; }
+main td, main th { padding: 5px 10px 5px 0; vertical-align: middle; text-align: left; }
+main th { font-weight: 600; color: var(--muted); font-size: 13px; }
+
+table.list { width: 100%; }
+table.list th, table.list td { padding: 7px 10px; border-bottom: 1px solid var(--line); }
+table.list tr:last-child td { border-bottom: 0; }
+table.list th a { color: var(--muted); text-decoration: none; }
+table.list th a:hover { color: var(--gold); }
+table.list td:first-child, table.list th:first-child { padding-left: 4px; }
+table.list .chk { text-align: center; width: 1%; white-space: nowrap; }
+table.players td:first-child, table.players th:first-child { padding-left: 10px; }
+table.players.grouped .team { display: none; }
+table.list .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* team colour as a bar on the player row */
+tr.team0 td:first-child { box-shadow: inset 3px 0 0 var(--red); padding-left: 10px; }
+tr.team1 td:first-child { box-shadow: inset 3px 0 0 var(--blue); padding-left: 10px; }
+tr.team2 td:first-child { box-shadow: inset 3px 0 0 var(--ok); padding-left: 10px; }
+tr.team3 td:first-child { box-shadow: inset 3px 0 0 var(--gold); padding-left: 10px; }
+
+/* team group header rows on the players page */
+table.list tr.group th { text-align: left; color: var(--text); background: var(--panel-2); padding-top: 6px; padding-bottom: 6px; }
+table.list tr.group.team0 th { background: color-mix(in srgb, var(--red) 22%, var(--panel)); }
+table.list tr.group.team1 th { background: color-mix(in srgb, var(--blue) 22%, var(--panel)); }
+table.list tr.group.team2 th { background: color-mix(in srgb, var(--ok) 22%, var(--panel)); }
+table.list tr.group.team3 th { background: color-mix(in srgb, var(--gold) 22%, var(--panel)); }
+
+img.flag { height: 0.95em; margin-right: 6px; vertical-align: -1px; border-radius: 1px; }
+
+/* ---- forms ---------------------------------------------------------------- */
+
+input, select, textarea, button { font: inherit; color: inherit; }
+
+input[type=text], input[type=password], input[type=number], input[type=search], input:not([type]), select, textarea {
+  background: var(--field);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 5px 8px;
+  max-width: 100%;
+}
+/* one control height, so fields and buttons on a row line up */
+input[type=text], input[type=password], input[type=number], input[type=search], input:not([type]),
+select:not([multiple]), input[type=submit], button {
+  height: 32px;
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+}
+input[type=text]:focus, input[type=password]:focus, input:not([type]):focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+  outline: none;
+}
+select[multiple] { min-width: 220px; }
+/* dropdowns in the same table column share one width */
+.block td > select:not([multiple]) { width: 100%; }
+textarea { width: 100%; min-height: 320px; font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; }
+input[type=checkbox], input[type=radio] { accent-color: var(--gold); width: 17px; height: 17px; vertical-align: middle; margin: 0 6px 0 0; }
+
+input[type=submit], button {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  padding: 0 14px;
+  cursor: pointer;
+}
+input[type=submit]:hover, button:hover { border-color: var(--gold); }
+input[type=submit].primary, button.primary {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--gold-ink);
+  font-weight: 600;
+}
+input[type=submit].danger, button.danger { border-color: var(--red); color: var(--red); background: transparent; }
+input[type=submit].danger:hover, button.danger:hover { background: var(--red); color: #fff; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
+.pagehead { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; }
+.pagehead h1 { margin: 0; }
+
+/* label / field grid: labels in one column, fields (and checkboxes) left aligned in the next */
+.fields { display: grid; grid-template-columns: max-content minmax(0, max-content); gap: 10px 32px; align-items: center; }
+.fields > label { color: var(--muted); white-space: nowrap; }
+.fields > span { display: flex; align-items: center; min-height: 32px; gap: 8px; }
+/* checkboxes start where the text in the fields starts (field border 1px + padding 8px) */
+.fields > span input[type=checkbox] { margin: 0 0 0 9px; }
+/* short number fields share one width, so the column has a straight right edge too */
+.fields input[size="1"], .fields input[size="2"], .fields input[size="3"], .fields input[size="4"] { width: 80px; }
+/* forms of a few short fields: as wide as their content, not the whole page */
+:where(.block.narrow,
+.block:has(> .fields):not(:has(.dual)),
+.block:has(> table:not(.list))) { width: fit-content; max-width: 100%; }
+h2.first { margin-top: 0; }
+@media (max-width: 560px) {
+  .fields { grid-template-columns: 1fr; gap: 2px; }
+  .fields > label { margin-top: 8px; }
+}
+
+/* a row of controls above or below a list */
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin: 0 0 20px; }
+.dual .toolbar { margin: 4px 0 0; }
+
+/* one form per row (IP policies, ban lists) */
+.rows { display: flex; flex-direction: column; gap: 6px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.row:last-child { border-bottom: 0; }
+.row.new { padding-top: 12px; }
+.pager { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+
+/* console */
+.console-log { width: 100%; height: 55vh; min-height: 260px; border: 1px solid var(--line); border-radius: var(--radius-m); background: var(--bg); }
+body.bare { background: var(--bg); padding: 10px 12px; font: 13px/1.5 Consolas, "Cascadia Mono", monospace; }
+.console-send { display: flex; gap: 8px; margin-top: 10px; }
+.console-send input[type=text] { flex: 1; }
+.console-send + .loginmsg { margin-top: 10px; }
+
+/* messages */
+.message { border-left: 4px solid var(--gold); }
+.message.error { border-left-color: var(--red); }
+.message h1 { margin-bottom: 6px; }
+
+footer { padding: 0 26px 24px; color: var(--muted); font-size: 12px; }
+
+/* mutators page: two lists, filter on the available one */
+.dual { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 14px; }
+/* map names are short: the map cycle lists get a sensible width instead of the whole page */
+.dual.maps { grid-template-columns: minmax(0, 360px) auto minmax(0, 360px); }
+:where(.block:has(> .dual.maps)) { width: fit-content; max-width: 100%; }
+/* Defaults pages: the panel is as wide as the game type row above it, or its own content */
+main.gt { width: fit-content; max-width: 100%; }
+main.gt > .block { width: auto; }
+/* ...and the label column takes the extra width, so the fields end at the panel's right edge */
+main.gt .fields { grid-template-columns: minmax(max-content, 1fr) minmax(0, max-content); }
+.dual .col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.dual .col h2 { margin: 0; font-size: 15px; }
+.dual .col h2 span { color: var(--muted); font-weight: 400; }
+.dual select { width: 100%; min-width: 0; height: 440px; padding: 4px; background: var(--panel-2); }
+.dual option { padding: 3px 6px; border-radius: 3px; }
+.moves input[type=submit] { width: 100%; }
+
+.listbox {
+  height: 440px;
+  overflow-y: auto;
+  padding: 4px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  user-select: none;
+}
+.listbox:focus { border-color: var(--gold); outline: none; }
+.listbox .item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  cursor: default;
+}
+.listbox .item:hover { background: var(--panel); }
+.listbox .item.sel { background: var(--sel); }
+.listbox .tag { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.listbox .cls { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--muted); font-size: 12px; }
+.listbox .empty { padding: 3px 8px; color: var(--muted); }
+.dual .note { min-height: 32px; margin: 0; }
+.dual input[type=search] {
+  width: 100%; background: var(--panel-2); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 6px 10px;
+}
+.moves { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.order { margin: 0; padding-left: 22px; }
+.order li { padding: 2px 0; }
+.order li .cls { color: var(--muted); font-size: 12px; margin-left: 8px; }
+
+/* restart confirmation */
+dialog {
+  background: var(--panel); color: var(--text);
+  border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; max-width: 400px;
+}
+dialog::backdrop { background: var(--backdrop); }
+dialog h2 { margin: 0 0 8px; font-size: 18px; }
+dialog .actions { justify-content: flex-end; }
+
+@media (max-width: 760px) {
+  .menubtn { display: inline-block; }
+  .topbar, .hud { padding-left: 16px; padding-right: 16px; }
+  .topbar .server .name { font-size: 18px; }
+  .topbar .user .lvl, .topbar .user a:not(.logout) { display: none; }
+  .shell { grid-template-columns: 1fr; }
+  nav.main { display: none; border-right: 0; border-bottom: 1px solid var(--line); }
+  nav.main.open { display: block; }
+  main { padding: 16px; }
+  footer { padding: 0 16px 24px; }
+  .dual, .dual.maps { grid-template-columns: 1fr; }
+  .block:has(> .dual.maps), main.gt { width: auto; }
+  .moves { flex-direction: row; justify-content: center; }
+  .dual select, .listbox { height: 260px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* users table */
+table.users input[type=password] { width: 150px; }
+table.users td { vertical-align: middle; }
+.rowactions { white-space: nowrap; }
+.rowactions input + input { margin-left: 6px; }
+
+/* wide tables (QuickSet presets) may use the whole width */
+main:has(.block.wide) { max-width: none; }
+table.levels td:first-child { white-space: nowrap; font-weight: 600; vertical-align: top; }
+table.levels td { vertical-align: top; }
+
+/* logged out page */
+body.loggedout { display: flex; justify-content: center; padding: 12vh 16px; }
+body.loggedout .block { width: min(420px, 100%); }
+
+
+/* login page */
+body.loginpage { display: flex; justify-content: center; padding: 10vh 16px 40px; }
+main.login { width: min(400px, 100%); padding: 0; }
+.loginhead { margin-bottom: 18px; padding-bottom: 12px; border-bottom: 3px solid var(--gold); }
+.loginhead .name { display: block; font-size: 20px; font-weight: 600; line-height: 1.2; overflow-wrap: anywhere; }
+.loginhead small { color: var(--muted); font-size: 12px; }
+main.login form { display: flex; flex-direction: column; gap: 6px; padding: 20px 22px; }
+main.login h1 { font-size: 20px; margin: 0 0 8px; }
+main.login label { color: var(--muted); margin-top: 6px; }
+main.login input[type=text], main.login input[type=password] { width: 100%; }
+main.login input[type=submit] { margin-top: 14px; align-self: flex-start; }
+.loginmsg { margin: 0 0 6px; padding: 8px 10px; border-left: 4px solid var(--gold); background: var(--panel-2); border-radius: var(--radius-s); }
+.loginmsg.error { border-left-color: var(--red); }

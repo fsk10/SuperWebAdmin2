@@ -1,0 +1,31 @@
+%KickMessage%
+<form method="post" action="%PostAction%">
+  <input type="hidden" name="Sort" value="%Sort%">
+  <div class="block">
+    <table class="list players%Grouped%">
+      <thead>
+        <tr>
+          <th><a href="%PostAction%?Sort=Name">Name</a></th>
+          <th class="team"><a href="%PostAction%?Sort=Team">Team</a></th>
+          <th class="num"><a href="%PostAction%?Sort=Ping">Ping</a></th>
+          <th class="num"><a href="%PostAction%?Sort=Score">%Score%</a></th>
+          <th>IP</th>
+          <th class="chk">Kick</th>
+          <th class="chk">Ban IP</th>
+        </tr>
+      </thead>
+      <tbody>
+%PlayerList%
+      </tbody>
+    </table>
+  </div>
+  <div class="block">
+    <div class="actions" style="margin-top:0">
+      <label for="reason" class="muted">Reason</label>
+      <input type="text" id="reason" name="Reason" size="24" maxlength="40" value="">
+      <input type="submit" name="Kick" value="Kick / ban selected" class="primary">
+    </div>
+    <div class="actions">%IPBanType%</div>
+    <p class="hint">The player sees the reason and your name. "Ban IP" adds the player's IP address to the ban list (see Bans)%DynBanHint%.</p>
+  </div>
+</form>

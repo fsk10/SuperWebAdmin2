@@ -1,0 +1,29 @@
+<form class="block narrow" method="post" action="%PostAction%">
+  <div class="fields">
+    <label for="fServerName">Server name</label>
+    <span><input type="text" id="fServerName" name="ServerName" size="40" value="%ServerName%"></span>
+    <label for="fAdminName">Admin name</label>
+    <span><input type="text" id="fAdminName" name="AdminName" size="40" value="%AdminName%"></span>
+    <label for="fAdminEmail">Admin email</label>
+    <span><input type="text" id="fAdminEmail" name="AdminEmail" size="40" value="%AdminEmail%"></span>
+    <label for="fMOTDLine1">MOTD line 1</label>
+    <span><input type="text" id="fMOTDLine1" name="MOTDLine1" size="40" value="%MOTDLine1%"></span>
+    <label for="fMOTDLine2">MOTD line 2</label>
+    <span><input type="text" id="fMOTDLine2" name="MOTDLine2" size="40" value="%MOTDLine2%"></span>
+    <label for="fMOTDLine3">MOTD line 3</label>
+    <span><input type="text" id="fMOTDLine3" name="MOTDLine3" size="40" value="%MOTDLine3%"></span>
+    <label for="fMOTDLine4">MOTD line 4</label>
+    <span><input type="text" id="fMOTDLine4" name="MOTDLine4" size="40" value="%MOTDLine4%"></span>
+    <label for="fGamePassword">Game password</label>
+    <span><input type="text" id="fGamePassword" name="GamePassword" size="40" value="%GamePassword%" autocomplete="off"></span>
+    <label for="fAdminPassword">Admin password</label>
+    <span><input type="text" id="fAdminPassword" name="AdminPassword" size="40" value="%AdminPassword%" autocomplete="off"></span>
+    <label for="fTickRate">Tick rate</label>
+    <span><input type="text" id="fTickRate" name="TickRate" size="4" maxlength="3" value="%TickRate%"></span>
+    <label for="fMaxClientRate">Max client rate</label>
+    <span><input type="text" id="fMaxClientRate" name="MaxClientRate" size="8" maxlength="7" value="%MaxClientRate%"></span>
+    <label for="fDoUplink">Advertise server</label>
+    <span><input type="checkbox" id="fDoUplink" name="DoUplink" value="true"%DoUplink%></span>
+  </div>
+  <div class="actions"><input type="submit" name="Apply" value="Apply" class="primary"></div>
+</form>

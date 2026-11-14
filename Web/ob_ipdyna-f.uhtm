@@ -1,0 +1,9 @@
+  </div>
+  <form method="post" action="%PostAction%" class="pager">
+    <input type="submit" value="1-50" name="B1">
+    <input type="%B50type%" value="51-100" name="B51">
+    <input type="%B100type%" value="101-150" name="B101">
+    <input type="%B150type%" value="151-200" name="B151">
+    <input type="%B200type%" value="201-250" name="B201">
+  </form>
+</div>

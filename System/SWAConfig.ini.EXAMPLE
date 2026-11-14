@@ -1,0 +1,12 @@
+[SuperWebAdmin2.SWAConfig]
+ListenPort=CHANGEME
+MaxConnections=50
+AdminRealm=CHANGEME
+UserList[0]=CHANGEME
+Salt=CHANGEME
+bOPBanEnabled=False
+bTickrateInSettings=True
+QuickSetConf[0]=Public iCTF:BotPack.InstaGibDM:BotPack.CTFGame::0:20:true:true:false:0:N/A:1:100:35:false:12:2
+QuickSetConf[1]=Normal TDM:BotPack.NoRedeemer:BotPack.TeamGamePlus:true:0:20:false:true:false:100:2:1:100:35:false
+QuickSetConf[2]=Normal CTF:BotPack.NoRedeemer:BotPack.CTFGame:true:0:20:false:true:true:0:N/A:1:100:35:false
+QuickSetConf[3]=Instagib CTF:BotPack.InstaGibDM:BotPack.CTFGame:true:0:20:false:true:false:0:N/A:1:100:35:false

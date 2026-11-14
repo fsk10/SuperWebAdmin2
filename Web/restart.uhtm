@@ -1,0 +1,4 @@
+<form method="post" action="%PostAction%" class="block message">
+  <p>Restart the current map? Everybody on the server reconnects to the same map, with the current mutators.</p>
+  <div class="actions"><input type="submit" name="Restart" value="Restart map" class="danger"></div>
+</form>

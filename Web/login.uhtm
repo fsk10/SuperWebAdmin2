@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="iso-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Log in - %ServerName%</title>
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/swa2.css">
+<script>try{if(localStorage.getItem('swa2-theme')=='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+</head>
+<body class="loginpage">
+<main class="login">
+  <header class="loginhead">
+    <span class="name">%ServerName%</span>
+    <small>%Address% &nbsp;SuperWebAdmin2</small>
+  </header>
+  <form class="block" method="post" action="/login">
+    <h1>Log in</h1>
+%Message%
+    <input type="hidden" name="Next" value="%Next%">
+    <label for="lu">Username</label>
+    <input type="text" id="lu" name="Username" value="%Username%" autocomplete="username" autocapitalize="off" spellcheck="false" required autofocus>
+    <label for="lp">Password</label>
+    <input type="password" id="lp" name="Password" autocomplete="current-password" required>
+    <input type="submit" value="Log in" class="primary">
+  </form>
+</main>
+</body>
+</html>

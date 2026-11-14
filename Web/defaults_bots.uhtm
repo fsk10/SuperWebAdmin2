@@ -1,0 +1,25 @@
+<form class="block narrow" method="post" action="%PostAction%">
+  <input type="hidden" name="GameType" value="%GameType%">
+  <div class="fields">
+    <label for="fBotDifficulty">Base skill</label>
+    <span><select id="fBotDifficulty" name="BotDifficulty">
+      <option value="0"%BotDifficulty0%>Novice</option>
+      <option value="1"%BotDifficulty1%>Average</option>
+      <option value="2"%BotDifficulty2%>Adept</option>
+      <option value="3"%BotDifficulty3%>Experienced</option>
+      <option value="4"%BotDifficulty4%>Skilled</option>
+      <option value="5"%BotDifficulty5%>Masterful</option>
+      <option value="6"%BotDifficulty6%>Inhuman</option>
+      <option value="7"%BotDifficulty7%>Godlike</option>
+    </select></span>
+    <label for="fMinPlayers">Minimum total players</label>
+    <span><input type="text" id="fMinPlayers" name="MinPlayers" maxlength="3" size="3" value="%MinPlayers%"></span>
+    <label for="fAutoAdjustSkill">Auto adjust skill</label>
+    <span><input type="checkbox" id="fAutoAdjustSkill" name="AutoAdjustSkill" value="true"%AutoAdjustSkill%></span>
+    <label for="fRandomOrder">Random order</label>
+    <span><input type="checkbox" id="fRandomOrder" name="RandomOrder" value="true"%RandomOrder%></span>
+%BalanceSubst%
+%DumbDownSubst%
+  </div>
+  <div class="actions"><input type="submit" name="Apply" value="Apply" class="primary"></div>
+</form>
