@@ -3936,7 +3936,7 @@ function QueryLogin(SWARequest Request, SWAResponse Response)
 	}
 	Token = Config.NewSession(User, NowMinutes(), Request.ClientIP);
 	log("SWA: "$User$"("$Request.ClientIP$") logged in.");
-	SendCookieRedirect(Response, SafeNext(Next), "swa2s="$Token$"; Path=/; HttpOnly; SameSite=Strict; Max-Age=604800");
+	SendCookieRedirect(Response, SafeNext(Next), "swa2s="$Token$"; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000");
 }
 
 // The game server's ip:port. A server bound to every interface reports 0.0.0.0; then the

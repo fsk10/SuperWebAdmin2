@@ -43,7 +43,7 @@ This was the main reason for SuperWebAdmin2.
 | One flat player list | Players grouped per team with the team score, spectators last |
 | Two small select boxes for mutators | Two lists with a filter, class names shown, double-click to move, order kept |
 | Light grey pages | Dark theme by default, light theme one click away (remembered per browser) |
-| Browser's Basic Auth popup, no real log out | A login page, a 7-day session that survives map changes, and a Log out button |
+| Browser's Basic Auth popup, no real log out | A login page, a 30-day session that survives map changes, and a Log out button |
 | User management spread over three pages | One users page, with an explanation of what each level may do |
 
 ### Security
@@ -175,7 +175,7 @@ behaves as well.
 ## Logging in
 
 Browsers get a login page that shows the server's name, so you can see that you reached
-the right server. After logging in, a session cookie lasts 7 days and survives map
+the right server. After logging in, a session cookie lasts 30 days and survives map
 changes. **Log out** in the top bar ends it. Only a hash of each session token is
 stored, in `SWAConfig.ini` (`Sessions[...]`).
 

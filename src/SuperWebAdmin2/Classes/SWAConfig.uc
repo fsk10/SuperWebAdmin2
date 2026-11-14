@@ -11,7 +11,7 @@ var config string Salt;
 // Browser logins (SWA2): MD5(Salt$token):user:expiry (minutes, server clock). Only the
 // hash of the session token is stored; the token itself lives in the browser's cookie.
 var config string Sessions[32];
-const SessionMinutes = 10080;   // 7 days
+const SessionMinutes = 43200;   // 30 days
 var int SessionCounter;
 
 struct MD5_CTX
