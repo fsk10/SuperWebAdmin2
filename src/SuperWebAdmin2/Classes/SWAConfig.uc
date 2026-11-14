@@ -8,6 +8,7 @@ var config string UserList[50];
 var config string QuickSetConf[20];
 var config bool bTickrateInSettings;
 var config string Salt;
+var config string ConsoleFavorites[16];   // quick buttons on the Console page, e.g. "/mutate nploader allowone"
 // Browser logins (SWA2): MD5(Salt$token):user:expiry (minutes, server clock). Only the
 // hash of the session token is stored; the token itself lives in the browser's cookie.
 var config string Sessions[32];

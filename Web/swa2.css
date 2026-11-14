@@ -305,6 +305,10 @@ body.bare { background: var(--bg); padding: 10px 12px; font: 13px/1.5 Consolas, 
 .console-send { display: flex; gap: 8px; margin-top: 10px; }
 .console-send input[type=text] { flex: 1; }
 .console-send + .loginmsg { margin-top: 10px; }
+.console-favs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.console-favs form { margin: 0; }
+.console-favs + .loginmsg { margin-top: 10px; }
+.autorefresh:not([hidden]) { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; }
 
 /* messages */
 .message { border-left: 4px solid var(--gold); }

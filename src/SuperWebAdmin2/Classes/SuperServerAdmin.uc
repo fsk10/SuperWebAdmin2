@@ -7,6 +7,7 @@ var string Path;
 
 var int ListenPort;
 var bool bListen;
+var bool bVoteSysChecked, bVoteSys;
 
 var SWAServer WebServer;
 
@@ -1404,7 +1405,7 @@ function QueryCurrentPlayers(SWARequest Request, SWAResponse Response)
 			P.ClientMessage("   - Reason    : "$Reason);
 			P.ClientMessage("   - by Admin  : "$Request.UserName);
 			P.ClientMessage("________________________________________");
-			Log("SWA: "$Request.UserName$"("$Request.ClientIP$") has kicked player '"$P.PlayerReplicationInfo.PlayerName$"' with reason '"$Reason$"'.");
+			Log("SWA: "$LogTime()$" "$Request.UserName$"("$Request.ClientIP$") has kicked player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$PlayerIP(PlayerPawn(P))$", with reason '"$Reason$"'.");
 			P.Destroy();
 		}
 	}
@@ -1612,7 +1613,7 @@ function BanPlayer(PlayerPawn P, SWARequest Request, string Reason)
 		}
 		comment = SanitizeBanText(Request.GetVariable("Reason"))$":"$SanitizeBanText(P.PlayerReplicationInfo.PlayerName);
 		opconf.AddDynaBan(IP, DayTemp, MapTemp, comment);
-		Log("SWA: "$Request.UserName$"("$Request.ClientIP$") has added a dynamic IP ban ("$DayTemp$" days, "$MapTemp$" maps) for player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$IP$", with reason '"$Reason$"'.");
+		Log("SWA: "$LogTime()$" "$Request.UserName$"("$Request.ClientIP$") has added a dynamic IP ban ("$DayTemp$" days, "$MapTemp$" maps) for player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$IP$", with reason '"$Reason$"'.");
 	}
 	else if (Level.Game.CheckIPPolicy(P.GetPlayerNetworkAddress()))
 	{
@@ -1626,13 +1627,33 @@ function BanPlayer(PlayerPawn P, SWARequest Request, string Reason)
 		}
 		else
 			Log("SWA: The UT IP ban list (IPPolicies) is full, the ban is not saved.");
-		Log("SWA: "$Request.UserName$"("$Request.ClientIP$") has added IP Ban for player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$IP$", with reason '"$Reason$"'.");
+		Log("SWA: "$LogTime()$" "$Request.UserName$"("$Request.ClientIP$") has added IP Ban for player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$IP$", with reason '"$Reason$"'.");
 	}
+	else
+		Log("SWA: "$LogTime()$" "$Request.UserName$"("$Request.ClientIP$") has banned player '"$P.PlayerReplicationInfo.PlayerName$"', IP: "$IP$" (already on the ban list), with reason '"$Reason$"'.");
 
 	P.ClientMessage("   - by Admin  : "$Request.UserName);
 	P.ClientMessage("   - Your IP   : "$IP);
 	P.ClientMessage("________________________________________");
 	P.Destroy();
+}
+
+// Server date and time for kick/ban log lines, "2026-11-14 21:05".
+function string LogTime()
+{
+	return Level.Year$"-"$PadLeft(string(Level.Month), 2, "0")$"-"$PadLeft(string(Level.Day), 2, "0")
+		$" "$PadLeft(string(Level.Hour), 2, "0")$":"$PadLeft(string(Level.Minute), 2, "0");
+}
+
+// A player's IP address without the port.
+function string PlayerIP(PlayerPawn P)
+{
+	local string IP;
+
+	IP = P.GetPlayerNetworkAddress();
+	if (InStr(IP, ":") != -1)
+		IP = Left(IP, InStr(IP, ":"));
+	return IP;
 }
 
 // Score column; on BunnyTrack maps the score encodes the best cap time.
@@ -1671,11 +1692,34 @@ function string CountryFlag(string IP)
 	return "<img src=\"flags/"$prefix2$".png\" class=\"flag\" title=\""$FixHTML(country)$"\"/>";
 }
 
+// VoteSys (any version, package VoteSys...) is loaded on this map. Checked once per map.
+function bool VoteSysRunning()
+{
+	local Actor A;
+
+	if (!bVoteSysChecked)
+	{
+		bVoteSysChecked = true;
+		foreach Level.AllActors(class'Actor', A)
+			if (Left(string(A.Class), 7) ~= "VoteSys")
+			{
+				bVoteSys = true;
+				break;
+			}
+	}
+	return bVoteSys;
+}
+
 function QueryCurrentGame(SWARequest Request, SWAResponse Response)
 {
 	local ListItem ExcludeMaps, IncludeMaps;
 	local class<DeathMatchPlus> NewClass;
 	local string NewGameType, Map;
+
+	if (VoteSysRunning())
+		Response.Subst("VoteSysNote", "<div class=\"loginmsg\" role=\"note\"><b>VoteSys is running on this server!</b><br>A map change from here is undone by VoteSys. Change maps through VoteSys instead.</div>");
+	else
+		Response.Subst("VoteSysNote", "");
 
 	if (Request.GetVariable("SwitchGameTypeAndMap", "") != "" || Request.GetVariable("SwitchGameType", "") != "")
 	{
@@ -1752,6 +1796,43 @@ function QueryCurrentGame(SWARequest Request, SWAResponse Response)
 	}
 }
 
+// Buttons for ConsoleFavorites[] in SWAConfig.ini. Each one sends its text like the input
+// field does; only the ones the user's level may send are shown.
+function string ConsoleFavoriteButtons(int Priv)
+{
+	local int i, j;
+	local string F, Label, Out;
+
+	for (i = 0; i < ArrayCount(Config.ConsoleFavorites); i++)
+	{
+		// "Label|text"; without a | the text is its own label
+		F = Config.ConsoleFavorites[i];
+		j = InStr(F, "|");
+		if (j == -1)
+			Label = F;
+		else
+		{
+			Label = Left(F, j);
+			F = Mid(F, j + 1);
+		}
+		if (F == "")
+			continue;
+		if (Label == "")
+			Label = F;
+		if (Left(F, 8) ~= "/mutate ")
+		{
+			if (Priv < 4)
+				continue;
+		}
+		else if (Left(F, 1) == "/" && Priv < 5)
+			continue;
+		Out = Out$"<form method=\"post\" action=\"/"$CurrentConsolePage$"\"><input type=\"hidden\" name=\"SendText\" value=\""$FixHTML(F)$"\"><input type=\"submit\" value=\""$FixHTML(Label)$"\" title=\""$FixHTML(F)$"\"></form>";
+	}
+	if (Out != "")
+		Out = "<div class=\"console-favs\" aria-label=\"Quick commands\">"$Out$"</div>";
+	return Out;
+}
+
 function QueryCurrentConsole(SWARequest Request, SWAResponse Response)
 {
 	local String SendStr, OutStr, Error, Keep;
@@ -1800,6 +1881,7 @@ function QueryCurrentConsole(SWARequest Request, SWAResponse Response)
 	else
 		Response.Subst("ConsoleMessage", "<p class=\"loginmsg error\" role=\"alert\">"$FixHTML(Error)$"</p>");
 	Response.Subst("SendText", FixHTML(Keep));
+	Response.Subst("Favorites", ConsoleFavoriteButtons(Config.Privileges(Request.Username)));
 	Response.Subst("LogURI", CurrentConsoleLogPage);
 	Response.Subst("SayURI", CurrentConsoleSendPage);
 	IncludeUHTM(Response,CurrentConsolePage$".uhtm");
